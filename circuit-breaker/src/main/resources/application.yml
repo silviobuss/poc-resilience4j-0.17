@@ -1,0 +1,30 @@
+server:
+  port: 8080
+
+management.endpoints.web.exposure.include: "*"
+
+resilience4j.circuitbreaker:
+  instances:
+    externalRequest:
+      ringBufferSizeInClosedState: 10
+      ringBufferSizeInHalfOpenState: 5
+      waitDurationInOpenState: 5s
+      failureRateThreshold: 50
+
+resilience4j.retry:
+  instances:
+    externalRequest:
+      maxRetryAttempts: 3
+
+resilience4j.bulkhead:
+  instances:
+    externalRequest:
+      maxWaitDuration: 10ms
+      maxConcurrentCalls: 20
+
+resilience4j.ratelimiter:
+  instances:
+    externalRequest:
+      limitForPeriod: 6
+      limitRefreshPeriod: 500ms
+      timeoutDuration: 3s

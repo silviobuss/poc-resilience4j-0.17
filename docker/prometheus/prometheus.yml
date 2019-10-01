@@ -1,0 +1,18 @@
+global:
+  scrape_interval: 15s
+
+  external_labels:
+    monitor: 'circuit-breaker-monitor'
+
+scrape_configs:
+  - job_name: 'prometheus-metrics'
+    scrape_interval: 5s
+    # metrics_path default "/metrics"
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'circuit-breaker-metrics'
+    scrape_interval: 5s
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ['localhost:8080']
